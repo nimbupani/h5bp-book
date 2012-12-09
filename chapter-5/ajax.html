@@ -1,0 +1,52 @@
+
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+	<meta charset="UTF-8">
+	<title>Cross-origin Resource Sharing using XHR2</title>
+	<link rel="stylesheet" href="http://people.opera.com//tiffanyb/s.css" media="screen">
+	<link rel="stylesheet" href="http://people.opera.com/s.css" media="screen">
+</head>
+<body>
+
+<nav><a href="../../">View all demos</a> &rarr; <a href="../">CORS demos</a></nav>
+
+<h1>Basic Cross-Origin Resource Sharing Demo using XHR2</h1>
+
+<section id="demo">
+
+<p>Inspect these headers, and you will see <code>Origin: http://people.opera.com</code> included among the request headers and <code>Access-Control-Allow-Origin: http://people.opera.com</code> included among the response headers.</p>
+
+<form action="#">
+	<button type="submit" id="trigger">Make request</button>
+</form>
+
+</section>
+
+<section id="response"></section>
+
+
+
+<script>
+makeRequest = function(event){
+	event.preventDefault();
+
+	var xhr = xrequest();
+
+	if(xhr !== undefined){
+		xhr.open('GET','http://nimbupani.com/data.json');
+		xhr.send();
+		xhr.onload = function(){
+			document.querySelector('#response').innerHTML = xhr.responseText;
+		}
+	} else {
+		console.log('Your browser does not support XMLHttpRequest or XDomainRequest.');
+	}
+}
+</script>
+
+<script src="http://people.opera.com/tiffanyb/2011/cors/xhrglobal.js"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,22 @@
+{
+  "name": "tmp",
+  "description": "The best project ever.",
+  "version": "0.1.0",
+  "homepage": "https://github.com/manian/tmp",
+  "author": {
+    "email": "divya.manian@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/manian/tmp.git"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/manian/tmp/blob/master/LICENSE-MIT"
+    }
+  ],
+  "dependencies": {
+    "node-build-script": "http://nodeload.github.com/h5bp/node-build-script/tarball/dev"
+  }
+}
