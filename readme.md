@@ -4,4 +4,4 @@ HTML5 Boilerplate Web Development helps you understand the basics of writing eff
 
 ## Sun and Sand Music Festival
 
-This is a hypothetic single-page music festival website that we work on to understand HTML5 Boilerplate. The website builds gradually over each chapter. You can download [all the files]() or download the files [chapter by chapter]().
+This is a hypothetic single-page music festival website that we work on to understand HTML5 Boilerplate. The website builds gradually over each chapter. You can download [all the files](https://github.com/nimbupani/h5bp-book/downloads) or browse the files chapter by chapter.
