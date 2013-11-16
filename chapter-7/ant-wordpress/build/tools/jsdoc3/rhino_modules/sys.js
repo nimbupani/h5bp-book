@@ -1,4 +1,3 @@
-
 exports.puts = function(str) {
-    print(String(str));
+  print(String(str));
 };
