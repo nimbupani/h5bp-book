@@ -15,55 +15,55 @@
     @param {string} json - The contents of package.json.
  */
 exports.Package = function(json) {
-    json = json || "{}";
+  json = json || "{}";
 
-    /** The source files associated with this package.
+  /** The source files associated with this package.
 	@type {Array<String>}
      */
-    this.files = [];
+  this.files = [];
 
-    /** The kind of this package.
+  /** The kind of this package.
 	@readonly
 	@default
 	@type {string}
     */
-    this.kind = 'package';
+  this.kind = 'package';
 
-    json = JSON.parse(json);
+  json = JSON.parse(json);
 
-    /** The name of this package.
+  /** The name of this package.
 	This value is found in the package.json file passed in as a command line option.
 	@type {string}
     */
-    this.name = json.name;
+  this.name = json.name;
 
-    /** The longname of this package.
+  /** The longname of this package.
 	@type {string}
     */
-    this.longname = this.kind + ':' + this.name;
+  this.longname = this.kind + ':' + this.name;
 
-    /** The description of this package.
+  /** The description of this package.
 	@type {string}
     */
-    this.description = json.description;
+  this.description = json.description;
 
-    /**
+  /**
 	The hash summary of the source file.
 	@type {string}
 	@since 3.2.0
     */
-    this.version = json.version;
+  this.version = json.version;
 
-    /**
-     * The licenses of this package.
-     * @type {Array<Object>}
-     * @example
-     * "licenses": [
-     *     {
-     *        "type": "GPLv2",
-     *        "url": "http://www.example.com/licenses/gpl.html"
-     *     }
-     * ]
-     */
-    this.licenses = json.licenses;
+  /**
+   * The licenses of this package.
+   * @type {Array<Object>}
+   * @example
+   * "licenses": [
+   *     {
+   *        "type": "GPLv2",
+   *        "url": "http://www.example.com/licenses/gpl.html"
+   *     }
+   * ]
+   */
+  this.licenses = json.licenses;
 }

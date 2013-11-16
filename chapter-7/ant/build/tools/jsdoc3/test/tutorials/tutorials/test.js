@@ -1,1 +1,4 @@
-{"title": "Test tutorial", "children": ["test2"]}
+{
+  "title": "Test tutorial",
+  "children": ["test2"]
+}

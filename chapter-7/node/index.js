@@ -1,6 +1,6 @@
 var h5bp = require('h5bp');
 var express = require('express');
-var fs= require('fs');
+var fs = require('fs');
 
 var app = express.createServer();
 
@@ -23,9 +23,10 @@ app.configure(function() {
 });
 
 app.get('/', function(req, res) {
-   res.send(fs.readFileSync('index.html', 'utf-8'));
+  res.send(fs.readFileSync('index.html', 'utf-8'));
 });
 
 app.listen(3000);
 
-console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
+console.log("Express server listening on port %d in %s mode", app.address()
+  .port, app.settings.env);

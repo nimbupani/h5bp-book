@@ -8,8 +8,9 @@
 
 
 var common = {
-	mixin: require('common/util').mixin,
-	events: require('common/events')
+  mixin: require('common/util')
+    .mixin,
+  events: require('common/events')
 };
 
 var fs = require('fs');
@@ -18,8 +19,7 @@ var fs = require('fs');
     @constructor
     @mixes module:common.events
  */
-exports.Scanner = function() {
-}
+exports.Scanner = function() {}
 common.mixin(exports.Scanner.prototype, common.events);
 
 /**
@@ -29,39 +29,41 @@ common.mixin(exports.Scanner.prototype, common.events);
 	@fires sourceFileFound
  */
 exports.Scanner.prototype.scan = function(searchPaths, depth, includeMatch, excludeMatch) {
-	var filePaths = [],
-	    that = this;
+  var filePaths = [],
+    that = this;
 
-	searchPaths = searchPaths || [];
-	depth = depth || 1;
+  searchPaths = searchPaths || [];
+  depth = depth || 1;
 
-	searchPaths.forEach(function($) {
-	if ( fs.stat($).isFile() ) {
-	    filePaths.push($);
-	}
-	else {
-		    filePaths = filePaths.concat(fs.ls($, depth));
-		}
-	});
+  searchPaths.forEach(function($) {
+    if (fs.stat($)
+      .isFile()) {
+      filePaths.push($);
+    } else {
+      filePaths = filePaths.concat(fs.ls($, depth));
+    }
+  });
 
-	filePaths = filePaths.filter(function($) {
-	    if (includeMatch && !includeMatch.test($)) {
-		return false
-	    }
+  filePaths = filePaths.filter(function($) {
+    if (includeMatch && !includeMatch.test($)) {
+      return false
+    }
 
-	    if (excludeMatch && excludeMatch.test($)) {
-		return false
-	    }
+    if (excludeMatch && excludeMatch.test($)) {
+      return false
+    }
 
-	    return true;
-	});
+    return true;
+  });
 
-	filePaths = filePaths.filter(function($) {
-	    var e = { fileName: $ };
-	that.fire('sourceFileFound', e);
+  filePaths = filePaths.filter(function($) {
+    var e = {
+      fileName: $
+    };
+    that.fire('sourceFileFound', e);
 
-	    return !e.defaultPrevented;
-	});
+    return !e.defaultPrevented;
+  });
 
-	return filePaths;
+  return filePaths;
 }

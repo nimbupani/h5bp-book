@@ -5,10 +5,10 @@
  */
 
 var template = require('underscore/template'),
-    fs = require('fs');
+  fs = require('fs');
 
 // override default settings
-template.settings.evaluate    = /<\?js([\s\S]+?)\?>/g;
+template.settings.evaluate = /<\?js([\s\S]+?)\?>/g;
 template.settings.interpolate = /<\?js=([\s\S]+?)\?>/g;
 
 /**
@@ -21,10 +21,10 @@ template.settings.interpolate = /<\?js=([\s\S]+?)\?>/g;
     @param {string} path - Templates directory.
  */
 exports.Template = function(path) {
-    // make sure path contains trailing slash
-    this.path = path.replace(/\/$/, '') + '/';
+  // make sure path contains trailing slash
+  this.path = path.replace(/\/$/, '') + '/';
 
-    this.layout = null;
+  this.layout = null;
 };
 
 /** Loads template from given file.
@@ -32,7 +32,7 @@ exports.Template = function(path) {
     @return {function} Returns template closure.
  */
 exports.Template.prototype.load = function(file) {
-    return template.render(fs.readFileSync(this.path + file));
+  return template.render(fs.readFileSync(this.path + file));
 };
 
 // templates cache
@@ -48,13 +48,13 @@ var cache = {};
     @return {string} Rendered template.
  */
 exports.Template.prototype.partial = function(file, data) {
-    // load template into cache
-    if (!(file in cache)) {
-	cache[file] = this.load(file);
-    }
+  // load template into cache
+  if (!(file in cache)) {
+    cache[file] = this.load(file);
+  }
 
-    // keep template helper context
-    return cache[file].call(this, data);
+  // keep template helper context
+  return cache[file].call(this, data);
 };
 
 /**
@@ -67,14 +67,14 @@ exports.Template.prototype.partial = function(file, data) {
     @return {string} Rendered template.
  */
 exports.Template.prototype.render = function(file, data) {
-    // main content
-    var content = this.partial(file, data);
+  // main content
+  var content = this.partial(file, data);
 
-    // apply layout
-    if (this.layout) {
-	data.content = content;
-	content = this.partial(this.layout, data);
-    }
+  // apply layout
+  if (this.layout) {
+    data.content = content;
+    content = this.partial(this.layout, data);
+  }
 
-    return content;
+  return content;
 };

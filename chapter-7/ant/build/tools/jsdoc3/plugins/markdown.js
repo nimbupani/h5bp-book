@@ -6,7 +6,7 @@
  */
 
 var conf = env.conf.markdown;
-var defaultTags = [ "classdesc", "description", "params", "properties", "returns" ];
+var defaultTags = ["classdesc", "description", "params", "properties", "returns"];
 var parse;
 var tags;
 
@@ -22,26 +22,27 @@ var tags;
     @throws {Exception} If the name does not correspond to a known parser.
  */
 function getParser(parser, conf) {
-    conf = conf || {};
+  conf = conf || {};
 
-    if (parser === "gfm") {
-	parser = new (require("gfm/showdown").Converter)();
-	parser.githubRepoOwner = conf.githubRepoOwner;
-	parser.githubRepoName = conf.githubRepoName;
-	parser.hardwrap = !!conf.hardwrap;
+  if (parser === "gfm") {
+    parser = new(require("gfm/showdown")
+      .Converter)();
+    parser.githubRepoOwner = conf.githubRepoOwner;
+    parser.githubRepoName = conf.githubRepoName;
+    parser.hardwrap = !! conf.hardwrap;
 
-	return function(source) {
-	    return parser.makeHtml(source);
-	};
-    } else if (parser === "evilstreak") {
-	parser = require("evilstreak/markdown");
+    return function(source) {
+      return parser.makeHtml(source);
+    };
+  } else if (parser === "evilstreak") {
+    parser = require("evilstreak/markdown");
 
-	return function(source) {
-	    return parser.renderJsonML(parser.toHTMLTree(source, conf.dialect));
-	}
-    } else {
-	throw "unknown Markdown parser: '" + parser + "'";
+    return function(source) {
+      return parser.renderJsonML(parser.toHTMLTree(source, conf.dialect));
     }
+  } else {
+    throw "unknown Markdown parser: '" + parser + "'";
+  }
 }
 
 /**
@@ -51,51 +52,51 @@ function getParser(parser, conf) {
     strings, objects, or arrays of objects.
  */
 function process(doclet) {
-    tags.forEach(function(tag) {
-	if (!doclet.hasOwnProperty(tag)) {
-	    return;
-	}
+  tags.forEach(function(tag) {
+    if (!doclet.hasOwnProperty(tag)) {
+      return;
+    }
 
-	if (typeof doclet[tag] === "string") {
-	    doclet[tag] = parse(doclet[tag]);
-	} else if (doclet[tag] instanceof Array) {
-	    doclet[tag].forEach(process);
-	} else if (doclet[tag]) {
-	    process(doclet[tag]);
-	}
-    });
+    if (typeof doclet[tag] === "string") {
+      doclet[tag] = parse(doclet[tag]);
+    } else if (doclet[tag] instanceof Array) {
+      doclet[tag].forEach(process);
+    } else if (doclet[tag]) {
+      process(doclet[tag]);
+    }
+  });
 }
 
 // determine which parser should be used based on configuration options, if any
 if (conf && conf.parser) {
-    parse = getParser(conf.parser, conf);
+  parse = getParser(conf.parser, conf);
 } else if (conf && conf.githubRepoOwner && conf.githubRepoName) {
-    // use GitHub-friendly parser if GitHub-specific options are present
-    parse = getParser("gfm", conf);
+  // use GitHub-friendly parser if GitHub-specific options are present
+  parse = getParser("gfm", conf);
 } else {
-    // evilstreak is the default parser
-    parse = getParser("evilstreak", conf);
+  // evilstreak is the default parser
+  parse = getParser("evilstreak", conf);
 }
 
 // set up the list of "tags" (properties) to process
 if (conf && conf.tags) {
-    tags = conf.tags.slice();
+  tags = conf.tags.slice();
 
-    defaultTags.forEach(function(tag) {
-	if (tags.indexOf(tag) === -1) {
-	    tags.push(tag);
-	}
-    });
+  defaultTags.forEach(function(tag) {
+    if (tags.indexOf(tag) === -1) {
+      tags.push(tag);
+    }
+  });
 } else {
-    tags = defaultTags;
+  tags = defaultTags;
 }
 
 exports.handlers = {
-    /**
+  /**
 	Translate markdown syntax in a new doclet's description into HTML. Is run
 	by JSDoc 3 whenever a "newDoclet" event fires.
      */
-    newDoclet: function(e) {
-	process(e.doclet);
-    }
+  newDoclet: function(e) {
+    process(e.doclet);
+  }
 };
